@@ -1,0 +1,24 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "Content Mangagement System made with Node.js, Express, and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "start": "CHOKIDAR_USEPOLLING=true nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ausomely/cms.git"
+  },
+  "author": "Jackie Au",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ausomely/cms/issues"
+  },
+  "homepage": "https://github.com/ausomely/cms#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.13.2",
+    "nodemon": "^2.0.9"
+  }
+}
