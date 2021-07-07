@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ausomely/cms#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongodb": "^3.6.8",
     "mongoose": "^5.13.2",
     "nodemon": "^2.0.9"
   }
