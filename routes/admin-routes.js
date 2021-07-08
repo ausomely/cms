@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const adminController = requre('../controllers/admin-controllers');
+const adminController = require('../controllers/admin-controllers');
 
+router.all('/*', (req, res, next) => {
+    req.app.locals.layout = 'admin';
+    next();
+}); 
 
 router.route('/').get(adminController.index);
+
+module.exports = router;
