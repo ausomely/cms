@@ -25,9 +25,8 @@ app.engine('handlebars', hdbs( { defaultLayout: 'default' } ));
 app.set('view engine', 'handlebars');
 
 /* Routes */
-app.use('/', (req, res) => {
-    res.render('default/index');
-});
+const defaultRoutes = require('./routes/default-routes');
+app.use('/', defaultRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
