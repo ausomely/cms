@@ -6,10 +6,13 @@ module.exports = {
     },
 
     getPosts: (req, res) => {
-        res.render('admin/posts/index');
+        Post.find().lean().then(posts => {
+            res.render('admin/posts/index', {posts: posts});
+        });
     },
 
     submitPost: (req, res) => {
+        
         const newPost = new Post({
             title: req.body.title,
             status: req.body.status,

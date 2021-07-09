@@ -37,7 +37,7 @@ app.use(flash());
 app.use(globalVars);
 
 /* Setup View Engine to Use Handlebars */
-app.engine('handlebars', hdbs( { defaultLayout: 'default' } ));
+app.engine('handlebars', hdbs( { defaultLayout: 'default', runtimeOptions: {allowProtoPropertiesByDefault: true, allowProtoMethodsByDefault: true} } ));
 app.set('view engine', 'handlebars');
 
 /* Routes */

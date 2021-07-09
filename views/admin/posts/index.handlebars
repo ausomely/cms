@@ -1,3 +1,25 @@
-<div class="container-fluid">
-    <h1>ALL POSTS</h1>
+<div class="container">
+    <div class="alert alert-secondary text-center">
+        <h1>ALL POSTS</h1>
+    </div>
+    <table class="table table-bordered">
+        <thead class="bg-dark">
+            <tr class="text-white text-center">
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody class="text-center">
+            {{#each posts}}
+            <tr>
+                <td>{{_id}}</td>
+                <td>{{title}}</td>
+                <td>{{description}}</td>
+                <td>{{status}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </div>
