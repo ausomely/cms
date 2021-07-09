@@ -6,17 +6,19 @@ module.exports = {
     },
 
     getPosts: (req, res) => {
-        Post.find().lean().then(posts => {
-            res.render('admin/posts/index', {posts: posts});
+        Post.find().lean().then(post => {
+            res.render('admin/posts/index', {posts: post});
         });
     },
 
     submitPost: (req, res) => {
-        
+        const commentsAllowed = req.body.allowedComments ? true : false;
+
         const newPost = new Post({
             title: req.body.title,
             status: req.body.status,
-            description: req.body.description
+            description: req.body.description,
+            allowComments: commentsAllowed
         });
 
         newPost.save().then(post => {
@@ -28,5 +30,12 @@ module.exports = {
 
     createPost: (req, res) => {
         res.render('admin/posts/create');
+    },
+
+    editPost: (req, res) => {
+        const id = req.params.id;
+        Post.findById(id).then(post => {
+            res.render('admin/posts/edit', {post: post});
+        });
     }
 };
