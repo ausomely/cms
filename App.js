@@ -6,7 +6,8 @@ const hdbs = require('express-handlebars');
 const { mongoDBUrl, PORT } = require('./config/configuration');
 const flash = require('connect-flash');
 const session = require('express-session');
-const { globalVars } = require('./config/configuration')
+const { globalVars } = require('./config/configuration');
+const methodOverride = require('method-override');
 
 
 const app = express();
@@ -39,6 +40,10 @@ app.use(globalVars);
 /* Setup View Engine to Use Handlebars */
 app.engine('handlebars', hdbs( { defaultLayout: 'default', runtimeOptions: {allowProtoPropertiesByDefault: true, allowProtoMethodsByDefault: true} } ));
 app.set('view engine', 'handlebars');
+
+/* Method Override Middleware */
+
+app.use(methodOverride('newMethod'));
 
 /* Routes */
 const defaultRoutes = require('./routes/default-routes');
