@@ -7,9 +7,6 @@
 // Scripts
 // 
 
-
-
-
 window.addEventListener('DOMContentLoaded', event => {
 
     // Toggle the side navigation
@@ -27,3 +24,21 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+const fadeTarget = document.getElementsByClassName('auto-hide')[0];
+
+if (window.location.href.indexOf('http://localhost:3000/admin/posts') > -1 && fadeTarget) {  
+    (function fadeOut() {
+        let fade = setInterval(function() {
+            if(!fadeTarget.style.opacity) {
+                fadeTarget.style.opacity = 1;
+            }
+            if (fadeTarget.style.opacity > 0) {
+                fadeTarget.style.opacity -= 0.1;
+            } else {
+                clearInterval(fade);
+                fadeTarget.style.display = 'none';
+            }
+        }, 100);
+    })();
+}
