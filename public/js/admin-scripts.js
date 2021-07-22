@@ -50,36 +50,31 @@ var categoryListTarget = document.getElementById('category-list');
 categoryButtonTarget.addEventListener('click', event => {
     event.preventDefault();
     let catData = document.getElementById('category-title').value;
-    console.log(catData);
-    let dataObj = {
-        name: catData
-    };
-    console.log(dataObj);
     const xhttp = new XMLHttpRequest();
     xhttp.open("POST", '/admin/category', true);
-    xhttp.onreadystatechange = function() {
+    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhttp.onreadystatechange = function(response) {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
-                console.log('Do I get here?');
-                console.log(xhttp.responseText);
-    //             var html = 
-    // `
-    //                         <tr>
-    //                             <td>${response.id}</td>
-    //                             <td class="d-flex justify-content-center">
-    //                                 <a href="/admin/categories/edit/${response.id}" class="btn btn-sm btn-warning mr-2">Edit</a>
-    //                                 <form action="/admin/categories/${response.id}?_method=DELETE" method="post">
-    //                                     <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-    //                                 </form>
-    //                             </td>
-    //                         </tr>
-    // `;
-    //             categoryListTarget.appendChild(html);
+                let html = 
+    `
+                            <tr>
+                                <td>${response.title}</td>
+                                <td class="d-flex justify-content-center">
+                                    <a href="/admin/categories/edit/${response.id}" class="btn btn-sm btn-warning mr-2">Edit</a>
+                                    <form action="/admin/categories/${response.id}?_method=DELETE" method="post">
+                                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+    `;
+                console.log(response);
+                categoryListTarget.insertAdjacentHTML('beforeend', html);
             } else {
                 console.warn('Did not recieve 200 OK from response');
             }
         }
     };
-    xhttp.send(dataObj);
-
+    xhttp.send('name=' + encodeURIComponent(catData));
 });

@@ -59,8 +59,15 @@ module.exports = {
     },
 
     createCategories: (req,res) => {
-        console.log(req.body);
         var categoryName = req.body.name;
-        console.log(categoryName);
+        
+        if (categoryName) {
+            const newCategory = new Category({
+                title: categoryName
+            });
+            newCategory.save().then(category => {
+                res.status(200).json(category);
+            });
+        }
     }
 };
