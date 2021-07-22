@@ -8,6 +8,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const { globalVars } = require('./config/configuration');
 const methodOverride = require('method-override');
+const bodyParser = require('body-parser');
 
 
 const app = express();
@@ -24,6 +25,8 @@ mongoose.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 /* Flash and Session */
 

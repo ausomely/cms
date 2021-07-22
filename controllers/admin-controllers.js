@@ -56,5 +56,11 @@ module.exports = {
         Category.find().lean().then(cats => {
             res.render('admin/category/index', {categories: cats});
         });
+    },
+
+    createCategories: (req,res) => {
+        console.log(req.body);
+        var categoryName = req.body.name;
+        console.log(categoryName);
     }
 };
