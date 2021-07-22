@@ -14,7 +14,7 @@ router.route('/posts')
     
 
 router.route('/posts/create')
-    .get(adminController.createPost)
+    .get(adminController.createPostsGet)
     .post(adminController.submitPost);
     
 

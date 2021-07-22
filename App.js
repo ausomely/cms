@@ -9,6 +9,7 @@ const session = require('express-session');
 const { globalVars } = require('./config/configuration');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
+const { selectOptions } = require('./config/customFunctions');
 
 
 const app = express();

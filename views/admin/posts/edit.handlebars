@@ -15,6 +15,14 @@
                         <option value="draft">Draft</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="status">Category</label>
+                    <select name="category" id="category" class="form-control">
+                        {{#each categories}}
+                        <option value="{{_id}}">{{title}}</option>
+                        {{/each}}
+                    </select>
+                </div>
 
                 <div class="form-check">
                     <label for="allowComments">
@@ -28,7 +36,7 @@
                     <textarea name="description" id="description" class="form-control" placeholder="Enter your content here" rows="10">{{post.description}}</textarea>
                 </div>
 
-                <button class="btn btn-outline-success btn-lg" type="submit">Update Post</button>
+                <button class="btn btn-outline-warning btn-lg" type="submit">Update Post</button>
 
 
             </form>

@@ -46,36 +46,37 @@ if (window.location.href.indexOf('http://localhost:3000/admin/posts') > -1 && fa
 var categoryButtonTarget = document.getElementById("create-category-button");
 var categoryListTarget = document.getElementById('category-list');
 
+if (window.location.href.indexOf('http://localhost:3000/admin/category/') > -1) {
+    categoryButtonTarget.addEventListener('click', event => {
+        event.preventDefault();
+        let catData = document.getElementById('category-title').value;
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("POST", '/admin/category', true);
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-categoryButtonTarget.addEventListener('click', event => {
-    event.preventDefault();
-    let catData = document.getElementById('category-title').value;
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", '/admin/category', true);
-    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    xhttp.onreadystatechange = function(response) {
-        if (xhttp.readyState === XMLHttpRequest.DONE) {
-            if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
-                let parseResponse = JSON.parse(xhttp.response);
-                let html = 
-    `
-                            <tr>
-                                <td>${parseResponse.title}</td>
-                                <td class="d-flex justify-content-center">
-                                    <a href="/admin/categories/edit/${parseResponse.id}" class="btn btn-sm btn-warning mr-2">Edit</a>
-                                    <form action="/admin/categories/${parseResponse.id}?_method=DELETE" method="post">
-                                        <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-    `;
-                console.log(JSON.parse(xhttp.response));
-                categoryListTarget.insertAdjacentHTML('beforeend', html);
-            } else {
-                console.warn('Did not recieve 200 OK from response');
+        xhttp.onreadystatechange = function(response) {
+            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
+                    let parseResponse = JSON.parse(xhttp.response);
+                    let html = 
+        `
+                                <tr>
+                                    <td>${parseResponse.title}</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a href="/admin/categories/edit/${parseResponse.id}" class="btn btn-sm btn-warning mr-2">Edit</a>
+                                        <form action="/admin/categories/${parseResponse.id}?_method=DELETE" method="post">
+                                            <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+        `;
+                    console.log(JSON.parse(xhttp.response));
+                    categoryListTarget.insertAdjacentHTML('beforeend', html);
+                } else {
+                    console.warn('Did not recieve 200 OK from response');
+                }
             }
-        }
-    };
-    xhttp.send('name=' + encodeURIComponent(catData));
-});
+        };
+        xhttp.send('name=' + encodeURIComponent(catData));
+    });
+}

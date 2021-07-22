@@ -9,9 +9,18 @@ module.exports = {
     /* ALL POST METHODS */
 
     getPosts: (req, res) => {
-        Post.find().lean().then(post => {
+        Post.find().lean()
+            .populate('category')
+            .then(post => {
             res.render('admin/posts/index', {posts: post});
         });
+    },
+
+    createPostsGet: (req, res) => {
+        Category.find().lean().then(cats => {
+            res.render('admin/posts/create', {categories: cats});
+        });
+
     },
 
     submitPost: (req, res) => {
@@ -21,7 +30,8 @@ module.exports = {
             title: req.body.title,
             status: req.body.status,
             description: req.body.description,
-            allowComments: commentsAllowed
+            allowComments: commentsAllowed,
+            category: req.body.category
         });
 
         newPost.save().then(post => {
@@ -29,10 +39,6 @@ module.exports = {
            req.flash('success-message', 'Post created successfully');
            res.redirect('/admin/posts');
         });
-    },
-
-    createPost: (req, res) => {
-        res.render('admin/posts/create');
     },
 
     editPost: (req, res) => {
