@@ -57,19 +57,20 @@ categoryButtonTarget.addEventListener('click', event => {
     xhttp.onreadystatechange = function(response) {
         if (xhttp.readyState === XMLHttpRequest.DONE) {
             if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
+                let parseResponse = JSON.parse(xhttp.response);
                 let html = 
     `
                             <tr>
-                                <td>${response.title}</td>
+                                <td>${parseResponse.title}</td>
                                 <td class="d-flex justify-content-center">
-                                    <a href="/admin/categories/edit/${response.id}" class="btn btn-sm btn-warning mr-2">Edit</a>
-                                    <form action="/admin/categories/${response.id}?_method=DELETE" method="post">
+                                    <a href="/admin/categories/edit/${parseResponse.id}" class="btn btn-sm btn-warning mr-2">Edit</a>
+                                    <form action="/admin/categories/${parseResponse.id}?_method=DELETE" method="post">
                                         <button class="btn btn-sm btn-danger" type="submit">Delete</button>
                                     </form>
                                 </td>
                             </tr>
     `;
-                console.log(response);
+                console.log(JSON.parse(xhttp.response));
                 categoryListTarget.insertAdjacentHTML('beforeend', html);
             } else {
                 console.warn('Did not recieve 200 OK from response');
