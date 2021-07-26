@@ -30,13 +30,14 @@
     <hr>
         <div class="row p-4">
             <div class="col-md-10">
-                <form action="/admin/category/create" method="post">
+                <form action="/admin/category/edit/:id" method="post">
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" name="title" id="category-title" placeholder="Enter Title">
+                        <input type="text" class="form-control" name="title" id="category-title" value="{{category.title}}">
+                        <input type="hidden" class="form-control" name="id" id="category-id" value="{{category._id}}">
                     </div>
 
-                    <button class="btn btn-outline-success btn-lg" id="create-category-button" type="submit">Create Category</button>
+                    <button class="btn btn-outline-warning btn-lg" id="update-category-button" type="submit">Update Category</button>
                 </form>
             </div>
         </div>

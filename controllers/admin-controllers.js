@@ -24,7 +24,7 @@ module.exports = {
     },
 
     submitPost: (req, res) => {
-        const commentsAllowed = req.body.allowedComments ? true : false;
+        const commentsAllowed = req.body.allowComments ? true : false;
 
         const newPost = new Post({
             title: req.body.title,
@@ -43,9 +43,31 @@ module.exports = {
 
     editPost: (req, res) => {
         const id = req.params.id;
-        Post.findById(id).then(post => {
-            res.render('admin/posts/edit', {post: post});
+        Post.findById(id)
+            .then(post => {
+                Category.find().then(cats => {
+                    res.render('admin/posts/edit', {post: post, categories: cats});
+                });
+
         });
+    },
+
+    editPostSubmit: (req, res) => {
+        const commentsAllowed = req.body.allowComments ? true : false;
+        const id = req.params.id;
+        Post.findById(id)
+            .then(post => {
+                post.title = req.body.title;
+                post.status = req.body.status;
+                post.allowComments = Boolean(req.body.allowComments);
+                post.description = req.body.description;
+                post.category = req.body.category;
+
+                post.save().then(updatePost => {
+                    req.flash('success-message', `The Post ${updatePost.title} has been updated.`);
+                    res.redirect('/admin/posts');
+                });
+            });
     },
 
     deletePost: (req, res) => {
@@ -64,7 +86,7 @@ module.exports = {
         });
     },
 
-    createCategories: (req,res) => {
+    createCategories: (req, res) => {
         var categoryName = req.body.name;
         
         if (categoryName) {
@@ -74,6 +96,30 @@ module.exports = {
             newCategory.save().then(category => {
                 res.status(200).json(category);
             });
+        }
+    },
+
+    editCategoriesGetRoute: async (req, res) => {
+        const catId = req.params.id;
+        const cats = await Category.find();
+
+        Category.findById(catId).then(cat => {
+            res.render('admin/category/edit', {category: cat, categories: cats});
+        })
+
+    },
+
+    editCategoriesPostRoute: (req, res) => {
+        const catId = req.params.id;
+        const newTitle = req.body.name;
+
+        if(newTitle) {
+            Category.findById(catId).then(cat => {
+                cat.title = newTitle;
+                cat.save().then(updated => {
+                    res.status(200).json({url: '/admin/category'});
+                })
+            })
         }
     }
 };

@@ -43,15 +43,16 @@ if (window.location.href.indexOf('http://localhost:3000/admin/posts') > -1 && fa
     })();
 }
 
-var categoryButtonTarget = document.getElementById("create-category-button");
+var createCategoryButtonTarget = document.getElementById("create-category-button");
+var updateCategoryButtonTarget = document.getElementById("update-category-button");
 var categoryListTarget = document.getElementById('category-list');
 
-if (window.location.href.indexOf('http://localhost:3000/admin/category/') > -1) {
-    categoryButtonTarget.addEventListener('click', event => {
+if (window.location.href.indexOf('http://localhost:3000/admin/category/') > -1 && window.location.pathname.split('/').pop() === "") {
+    createCategoryButtonTarget.addEventListener('click', event => {
         event.preventDefault();
         let catData = document.getElementById('category-title').value;
         const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", '/admin/category', true);
+        xhttp.open("POST", '/admin/category/create', true);
         xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
         xhttp.onreadystatechange = function(response) {
@@ -70,8 +71,32 @@ if (window.location.href.indexOf('http://localhost:3000/admin/category/') > -1) 
                                     </td>
                                 </tr>
         `;
-                    console.log(JSON.parse(xhttp.response));
+                    console.log(parseResponse);
                     categoryListTarget.insertAdjacentHTML('beforeend', html);
+                } else {
+                    console.warn('Did not recieve 200 OK from response');
+                }
+            }
+        };
+        xhttp.send('name=' + encodeURIComponent(catData));
+    });
+}
+
+if (window.location.href.indexOf('http://localhost:3000/admin/category/') > -1 && window.location.pathname.split('/').pop() != "") {
+    updateCategoryButtonTarget.addEventListener('click', event => {
+        event.preventDefault();
+        let catData = document.getElementById('category-title').value;
+        let catId = document.getElementById('category-id').value;
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("POST", `/admin/category/edit/${catId}`, true);
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhttp.onreadystatechange = function(response) {
+            if (xhttp.readyState === XMLHttpRequest.DONE) {
+                if (xhttp.status === 0 || (xhttp.status >= 200 && xhttp.status < 400)) {
+                    let parseResponse = JSON.parse(xhttp.response);
+                    console.log(parseResponse.url);
+                    window.location.href = parseResponse.url;
                 } else {
                     console.warn('Did not recieve 200 OK from response');
                 }
