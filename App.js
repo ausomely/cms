@@ -10,6 +10,7 @@ const { globalVars } = require('./config/configuration');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const { selectOptions } = require('./config/customFunctions');
+const fileUpload = require('express-fileupload');
 
 
 const app = express();
@@ -39,7 +40,11 @@ app.use(session({
 
 app.use(flash());
 
+/* Use Global Variables */
 app.use(globalVars);
+
+/* File Upload Middleware */
+app.use(fileUpload());
 
 /* Setup View Engine to Use Handlebars */
 app.engine('handlebars', hdbs( { defaultLayout: 'default', runtimeOptions: {allowProtoPropertiesByDefault: true, allowProtoMethodsByDefault: true}, helpers: {select: selectOptions} } ));
