@@ -5,7 +5,8 @@ module.exports = {
 
     isEmpty: function (obj) {
         for (let key in obj) {
-            return obj.hasOwnProperty(key);
+            return false;
         }
+        return true;
     }
 };

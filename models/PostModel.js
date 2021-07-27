@@ -43,7 +43,12 @@ const PostSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'comment'
         }
-    ]
+    ],
+
+    file: {
+        type: String,
+        default: ''
+    }
 
 });
 
