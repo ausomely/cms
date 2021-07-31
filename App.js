@@ -11,6 +11,10 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const { selectOptions } = require('./config/customFunctions');
 const fileUpload = require('express-fileupload');
+/* Routes */
+const defaultRoutes = require('./routes/default-routes');
+const adminRoutes = require('./routes/admin-routes');
+const passport = require('passport')
 
 
 const app = express();
@@ -29,6 +33,10 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+/* Passport */
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* Flash and Session */
 
@@ -51,13 +59,14 @@ app.engine('handlebars', hdbs( { defaultLayout: 'default', runtimeOptions: {allo
 app.set('view engine', 'handlebars');
 
 /* Method Override Middleware */
-
 app.use(methodOverride('newMethod'));
 
-/* Routes */
-const defaultRoutes = require('./routes/default-routes');
-const adminRoutes = require('./routes/admin-routes');
+/* Error Handler */
+app.use((err, req, res, next) => {
+    console.log(err);
+});
 
+/* Routes */
 app.use('/', defaultRoutes);
 app.use('/admin', adminRoutes);
 

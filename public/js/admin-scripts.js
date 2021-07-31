@@ -39,7 +39,7 @@ if (window.location.href.indexOf('http://localhost:3000/admin/posts') > -1 && fa
                 clearInterval(fade);
                 fadeTarget.style.display = 'none';
             }
-        }, 100);
+        }, 200);
     })();
 }
 
@@ -104,4 +104,20 @@ if (window.location.href.indexOf('http://localhost:3000/admin/category/') > -1 &
         };
         xhttp.send('name=' + encodeURIComponent(catData));
     });
+}
+
+if (window.location.href.indexOf('http://localhost:3000/admin') > -1 && fadeTarget) {  
+    (function fadeOut() {
+        let fade = setInterval(function() {
+            if(!fadeTarget.style.opacity) {
+                fadeTarget.style.opacity = 1;
+            }
+            if (fadeTarget.style.opacity > 0) {
+                fadeTarget.style.opacity -= 0.1;
+            } else {
+                clearInterval(fade);
+                fadeTarget.style.display = 'none';
+            }
+        }, 200);
+    })();
 }

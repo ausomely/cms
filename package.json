@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ausomely/cms#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^5.0.2",
     "connect-flash": "^0.1.1",
@@ -30,10 +31,16 @@
     "mongodb": "^3.6.8",
     "mongoose": "^5.13.2",
     "nodemon": "^2.0.9",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "startbootstrap-blog-home": "^5.0.2",
     "startbootstrap-sb-admin": "^7.0.2"
   },
   "devDependencies": {
-    "@types/express-handlebars": "^5.3.1"
+    "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/express-handlebars": "^5.3.1",
+    "@types/passport": "^1.0.7",
+    "@types/passport-local": "^1.0.34"
   }
 }

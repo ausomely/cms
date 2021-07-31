@@ -2,6 +2,7 @@ const Post = require('../models/PostModel');
 const Category = require('../models/CategoryModel');
 const User = require('../models/UserModel');
 const bcrypt = require('bcrypt');
+const passport = require('passport');
 
 module.exports = {
     index: async (req, res) => {
@@ -16,7 +17,7 @@ module.exports = {
     },
 
     loginPost: (req, res) => {
-        res.send('Data has been successfully been submitted.');
+    
     },
 
     registerGet: (req, res) => {
@@ -47,7 +48,7 @@ module.exports = {
                 email: req.body.email
             });
         } else {
-            User.find({email: req.body.email}).limit(1).exec(user => {
+            User.findOne({email: req.body.email}).then(user => {
                 if (user) {
                     req.flash('error-message', 'Email already exists, try to login.');
                     res.redirect('/login');
@@ -65,6 +66,8 @@ module.exports = {
                         });
                     });
                 }
+            }).catch((err) => {
+                console.log(err);
             });
         }
     }
