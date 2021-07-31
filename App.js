@@ -34,9 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-/* Passport */
-app.use(passport.initialize());
-app.use(passport.session());
 
 /* Flash and Session */
 
@@ -47,6 +44,10 @@ app.use(session({
 }));
 
 app.use(flash());
+
+/* Passport */
+app.use(passport.initialize());
+app.use(passport.session());
 
 /* Use Global Variables */
 app.use(globalVars);
