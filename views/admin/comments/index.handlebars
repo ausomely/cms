@@ -17,7 +17,11 @@
                     <tr>
                         <td>{{id}}</td>
                         <td style="width: auto;">{{user.firstName}} {{user.lastName}}</td>
-                        <td>{{commentIsApproved}}</td>
+                        <td>
+                            <div class="d-flex form-check form-switch justify-content-center">
+                                <input class="form-check-input" type="checkbox" name="approveComments" data-id="{{id}}" id="approveCommentsToggler" {{#if commentIsApproved}} checked="checked" {{/if}}/>
+                            </div>
+                        </td>
                         <td>{{date}}</td>
                         <td>{{body}}</td>
                     </tr>    

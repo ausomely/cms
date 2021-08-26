@@ -8,6 +8,24 @@
 
 const fadeTarget = document.getElementsByClassName('auto-hide')[0];
 
+// Fade out notifications on root page
+if (window.location.href.indexOf('http://localhost:3000/') > -1 && fadeTarget) {  
+    (function fadeOut() {
+        let fade = setInterval(function() {
+            if(!fadeTarget.style.opacity) {
+                fadeTarget.style.opacity = 1;
+            }
+            if (fadeTarget.style.opacity > 0) {
+                fadeTarget.style.opacity -= 0.1;
+            } else {
+                clearInterval(fade);
+                fadeTarget.style.display = 'none';
+            }
+        }, 200);
+    })();
+}
+
+// Fade out notifications on login page
 if (window.location.href.indexOf('http://localhost:3000/login') > -1 && fadeTarget) {  
     (function fadeOut() {
         let fade = setInterval(function() {

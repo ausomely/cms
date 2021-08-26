@@ -15,12 +15,16 @@ module.exports = {
             .populate('category')
             .then(post => {
             res.render('admin/posts/index', {posts: post});
+        }).catch(err => {
+            console.log(err);
         });
     },
 
     createPostsGet: (req, res) => {
         Category.find().lean().then(cats => {
             res.render('admin/posts/create', {categories: cats});
+        }).catch(err => {
+            console.log(err);
         });
 
     },
@@ -55,6 +59,8 @@ module.exports = {
            console.log(post); 
            req.flash('success-message', 'Post created successfully');
            res.redirect('/admin/posts');
+        }).catch(err => {
+            console.log(err);
         });
     },
 
@@ -64,6 +70,8 @@ module.exports = {
             .then(post => {
                 Category.find().then(cats => {
                     res.render('admin/posts/edit', {post: post, categories: cats});
+                }).catch(err => {
+                    console.log(err);
                 });
 
         });
@@ -84,6 +92,8 @@ module.exports = {
                     req.flash('success-message', `The Post ${updatePost.title} has been updated.`);
                     res.redirect('/admin/posts');
                 });
+            }).catch(err => {
+                console.log(err);
             });
     },
 
@@ -92,6 +102,8 @@ module.exports = {
             .then(deletedPost => {
                 req.flash('success-message', `The post ${deletedPost.title} has been deleted.`);
                 res.redirect('/admin/posts');
+            }).catch(err => {
+                console.log(err);
             });
     },
 
@@ -100,6 +112,8 @@ module.exports = {
     getCategories: (req, res) => {
         Category.find().lean().then(cats => {
             res.render('admin/category/index', {categories: cats});
+        }).catch(err => {
+            console.log(err);
         });
     },
 
@@ -112,6 +126,8 @@ module.exports = {
             });
             newCategory.save().then(category => {
                 res.status(200).json(category);
+            }).catch(err => {
+                console.log(err);
             });
         }
     },
@@ -122,6 +138,8 @@ module.exports = {
 
         Category.findById(catId).then(cat => {
             res.render('admin/category/edit', {category: cat, categories: cats});
+        }).catch(err => {
+            console.log(err);
         });
 
     },
@@ -135,9 +153,23 @@ module.exports = {
                 cat.title = newTitle;
                 cat.save().then(updated => {
                     res.status(200).json({url: '/admin/category'});
+                }).catch(err => {
+                    console.log(err);
                 });
+            }).catch(err => {
+                console.log(err);
             });
         }
+    },
+
+    deleteCategory: (req, res) => {
+        Category.findByIdAndDelete(req.params.id)
+            .then(deletedCat => {
+                req.flash('success-message', `The category ${deletedCat.title} has been deleted.`);
+                res.redirect('/admin/category/');
+            }).catch(err => {
+                console.log(err);
+            });
     },
 
     /* COMMENT ROUTE METHODS */
@@ -146,6 +178,22 @@ module.exports = {
             .populate('user')
             .then(comments => {
                 res.render('admin/comments/index', {comments : comments});
+            }).catch(err => {
+                console.log(err);
             });
+    },
+
+    approveComments: (req, res) => {
+        var data = req.body.data;
+        var commentId = req.body.id;
+
+        Comment.findById(commentId).then(comment => {
+            comment.commentIsApproved = data;
+            comment.save().then(saved => {
+                res.status(200).send('OK');
+            }).catch(err => {
+                res.status(201).send('FAIL');
+            })
+        });
     }
 };

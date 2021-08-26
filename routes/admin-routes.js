@@ -38,8 +38,13 @@ router.route('/category/edit/:id')
     .get(adminController.editCategoriesGetRoute)
     .post(adminController.editCategoriesPostRoute);
 
+router.route('/category/delete/:id')
+    .delete(adminController.deleteCategory);
+
     
 /* Admin Comment Routes */ 
 router.route('/comment')
-    .get(adminController.getComments);
+    .get(adminController.getComments)
+    .post(adminController.approveComments);
+
 module.exports = router;
