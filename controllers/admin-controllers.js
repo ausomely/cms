@@ -1,5 +1,6 @@
 const Post = require('../models/PostModel');
 const Category = require('../models/CategoryModel');
+const Comment = require('../models/CommentModel');
 const { isEmpty } = require('../config/customFunctions');
 
 module.exports = {
@@ -121,7 +122,7 @@ module.exports = {
 
         Category.findById(catId).then(cat => {
             res.render('admin/category/edit', {category: cat, categories: cats});
-        })
+        });
 
     },
 
@@ -134,8 +135,17 @@ module.exports = {
                 cat.title = newTitle;
                 cat.save().then(updated => {
                     res.status(200).json({url: '/admin/category'});
-                })
-            })
+                });
+            });
         }
+    },
+
+    /* COMMENT ROUTE METHODS */
+    getComments: (req, res) => {
+        Comment.find()
+            .populate('user')
+            .then(comments => {
+                res.render('admin/comments/index', {comments : comments});
+            });
     }
 };
